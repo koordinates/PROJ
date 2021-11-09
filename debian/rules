@@ -33,6 +33,9 @@ override_dh_auto_clean:
 	( cd $(CURDIR)/data && cat $(CURDIR)/debian/datumgrids.list $(CURDIR)/debian/datumgrids-ch.list | xargs rm -f )
 	dh_auto_clean
 
+override_dh_autoreconf:
+	dh_autoreconf ./autogen.sh
+
 override_dh_auto_configure: datumgrids
 	dh_auto_configure
 
