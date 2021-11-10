@@ -40,5 +40,6 @@ set(SQL_FILES
   "${SQL_DIR}/nadcon5_concatenated_operations.sql"
   "${SQL_DIR}/customizations.sql"
   "${SQL_DIR}/nkg_post_customizations.sql"
+  "${SQL_DIR}/koordinates_overrides.sql"
   "${SQL_DIR}/commit.sql"
 )
