@@ -1,5 +1,16 @@
 -- This file is hand generated
 --
+-- When transforming from GDA2020 to WGS84,
+-- use the null transform rather than grid or 7-param transforms
+UPDATE
+    helmert_transformation_table
+SET
+    accuracy = 0.0299
+WHERE
+    auth_name = 'EPSG'
+    AND code = 8450;
+
+--
 -- When transforming from GDA94 to GDA2020,
 -- use the distortion+conformal grid in preference to the conformal-only grid.
 UPDATE
