@@ -39,3 +39,100 @@ SET
 WHERE
     auth_name = 'EPSG'
     AND code = 9689;
+
+/* 
+ Add concatenated transform for AGD66 to GDA2020
+ */
+INSERT INTO
+    concatenated_operation (
+        auth_name,
+        code,
+        name,
+        description,
+        source_crs_auth_name,
+        source_crs_code,
+        target_crs_auth_name,
+        target_crs_code,
+        accuracy,
+        operation_version,
+        deprecated
+    )
+VALUES
+    (
+        'KX',
+        1000,
+        'AGD66 to GDA2020 via GDA94',
+        '',
+        'EPSG',
+        4202,
+        'EPSG',
+        7844,
+        0.5099,
+        1,
+        false
+    );
+
+-- step 1
+-- DERIVED_FROM(EPSG):1803, AGD66 to GDA94 (11), 0.5 m
+INSERT INTO
+    concatenated_operation_step (
+        operation_auth_name,
+        operation_code,
+        step_number,
+        step_auth_name,
+        step_code
+    )
+VALUES
+    (
+        'KX',
+        1000,
+        1,
+        'EPSG',
+        1803
+    );
+
+-- step 2
+-- DERIVED_FROM(EPSG):8447, GDA94 to GDA2020 (2), 0.0099 m
+INSERT INTO
+    concatenated_operation_step (
+        operation_auth_name,
+        operation_code,
+        step_number,
+        step_auth_name,
+        step_code
+    )
+VALUES
+    (
+        'KX',
+        1000,
+        2,
+        'EPSG',
+        8447
+    );
+
+INSERT INTO
+    usage (
+        auth_name,
+        code,
+        object_table_name,
+        object_auth_name,
+        object_code,
+        extent_auth_name,
+        extent_code,
+        scope_auth_name,
+        scope_code
+    )
+VALUES
+    (
+        'KX',
+        1000,
+        'concatenated_operation',
+        'KX',
+        1000,
+        'EPSG',
+        2575,
+        'EPSG',
+        1234
+    );
+
+-- TODO: perhaps we need to insert into `other_transformation` table too?
