@@ -3,7 +3,7 @@
 -- When transforming from GDA2020 to WGS84,
 -- use the null transform rather than grid or 7-param transforms
 UPDATE
-    helmert_transformation
+    helmert_transformation_table
 SET
     accuracy = 0.0299
 WHERE
