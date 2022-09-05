@@ -32,6 +32,8 @@ cd /tmp/build
 # configure
 cmake /src \
     -DWITH_TESTS=NO \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_BUILD_TYPE=Release \
     -DCPACK_DEBIAN_PACKAGE_MAINTAINER=peter.wilkinson@koordinates.com \
     -DCPACK_DEBIAN_PACKAGE_SHLIBDEPS=ON \
     -DCPACK_DEBIAN_PACKAGE_GENERATE_SHLIBS=ON \
