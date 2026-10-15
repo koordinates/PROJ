@@ -23,8 +23,8 @@ steps:
         aptly-upload
         --aptly-url https://apt-repo.kx.gd
         --retries 3
-        --repo kx-builds-trixie
-        --series trixie
+        --repo kx-builds-jammy
+        --series jammy
         build-*/*.deb
     retry:
       automatic: true

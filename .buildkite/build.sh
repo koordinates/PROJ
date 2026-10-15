@@ -15,7 +15,7 @@ V_MAJOR="$(${GREP} -Po '(?<=#define PROJ_VERSION_MAJOR )\d' src/proj.h)"
 V_MINOR="$(${GREP} -Po '(?<=#define PROJ_VERSION_MINOR )\d' src/proj.h)"
 V_PATCH="$(${GREP} -Po '(?<=#define PROJ_VERSION_PATCH )\d' src/proj.h)"
 
-DIST=trixie
+DIST=jammy
 DEB_BASE_VERSION="${V_MAJOR}.${V_MINOR}.${V_PATCH}"
 DEB_VERSION="${DEB_BASE_VERSION}+kx-ci${BUILDKITE_BUILD_NUMBER}-$(git show -s --date=format:%Y%m%d --format=git%cd.%h)"
 echo "Debian Package Version: ${DEB_VERSION}"
@@ -45,7 +45,7 @@ docker run --rm \
     -v "${SRC_DIR}:/kx/source" \
     --tmpfs /tmp:exec \
     -w /kx/source \
-    "${ECR}/trixiebuild:cds-trixiebuild.latest" \
+    "${ECR}/jammybuild:master.latest" \
     /kx/buildscripts/build_binary_package.sh -uc -us
 
 echo "--- Signing debian archives ..."
@@ -54,6 +54,6 @@ time docker run \
     -e "GPG_KEY=${APT_GPG_KEY}" \
     -w "/src" \
     "${ECR}/ci-tools:latest" \
-    sign-debs "/src/build-trixie/*.deb"
+    sign-debs "/src/build-${DIST}/*.deb"
 
-mv build-trixie "build-${BUILDKITE_JOB_ID}"
+mv "build-${DIST}" "build-${BUILDKITE_JOB_ID}"
