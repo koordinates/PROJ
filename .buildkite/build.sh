@@ -54,6 +54,12 @@ time docker run \
     -e "GPG_KEY=${APT_GPG_KEY}" \
     -w "/src" \
     "${ECR}/ci-tools:latest" \
-    sign-debs "/src/build-trixie/*.deb"
+    sign-debs build-trixie/*.deb
+
+# Both jobs build the arch-independent packages, and each signs its own copy.
+# aptly refuses a second, different file with the same name, so publish amd64's.
+if [ "$(uname -m)" != "x86_64" ]; then
+    rm -f build-trixie/*_all.deb
+fi
 
 mv build-trixie "build-${BUILDKITE_JOB_ID}"
