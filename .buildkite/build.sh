@@ -54,6 +54,6 @@ time docker run \
     -e "GPG_KEY=${APT_GPG_KEY}" \
     -w "/src" \
     "${ECR}/ci-tools:latest" \
-    sign-debs "/src/build-${DIST}/*.deb"
+    sign-debs "build-${DIST}"/*.deb
 
 mv "build-${DIST}" "build-${BUILDKITE_JOB_ID}"
