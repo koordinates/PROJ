@@ -56,4 +56,10 @@ time docker run \
     "${ECR}/ci-tools:latest" \
     sign-debs "build-${DIST}"/*.deb
 
+# Both jobs build the arch-independent packages, and each signs its own copy.
+# aptly refuses a second, different file with the same name, so publish amd64's.
+if [ "$(uname -m)" != "x86_64" ]; then
+    rm -f "build-${DIST}"/*_all.deb
+fi
+
 mv "build-${DIST}" "build-${BUILDKITE_JOB_ID}"
